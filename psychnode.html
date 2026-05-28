@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PsychNode — Map Your Mind. Transform Your Life.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-main: #0b1f27;
+  --card-bg: #1e4c55;
+  --card-bg-alpha: rgba(30, 76, 85, 0.55);
+  --card-border: rgba(135, 209, 194, 0.15);
+  --mint-green: #87D1C2;
+  --soft-mint: #BCE9DC;
+  --light-mint: #E6F6F2;
+  --coral: #FF6B7A;
+  --coral-dim: #ff6b7a33;
+  --coral-glow: #ff6b7a55;
+  --header-in-card: #BCE9DC;
+  --text-in-card: #E6F6F2;
+  --text-primary: #e8faf5;
+  --text-secondary: #BCE9DC;
+  --text-muted: #6aaa99;
+  --text-on-coral: #0b1f27;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg-main);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  line-height: 1.65;
+}
+
+/* ── BOTANICAL BACKGROUND ── */
+.botanical-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.botanical-bg svg { position: absolute; opacity: 0.1; }
+
+.branch-1 { top: -40px; left: -60px; width: 500px; transform: rotate(15deg); }
+.branch-2 { top: 10%; right: -80px; width: 450px; transform: rotate(-25deg) scaleX(-1); }
+.branch-3 { top: 35%; left: -100px; width: 550px; transform: rotate(30deg); }
+.branch-4 { top: 55%; right: -60px; width: 480px; transform: rotate(-15deg) scaleX(-1); }
+.branch-5 { top: 75%; left: -70px; width: 520px; transform: rotate(20deg); }
+.branch-6 { bottom: -50px; right: -90px; width: 500px; transform: rotate(-30deg); }
+.branch-7 { top: 20%; left: 50%; width: 400px; transform: rotate(45deg); opacity: 0.05; }
+.branch-8 { top: 45%; right: 30%; width: 380px; transform: rotate(-40deg) scaleX(-1); opacity: 0.05; }
+
+/* ── FLOATING PARTICLES ── */
+.particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  animation: floatParticle linear infinite;
+}
+.particle.mint { background: var(--mint-green); box-shadow: 0 0 8px var(--mint-green); }
+.particle.coral { background: var(--coral); box-shadow: 0 0 10px var(--coral); }
+
+@keyframes floatParticle {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+
+/* ── NAVBAR ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(30, 76, 85, 0.75);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--card-border);
+  padding: 0 40px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.3s;
+}
+
+nav.scrolled {
+  background: rgba(30, 76, 85, 0.92);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+}
+
+.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+
+.nav-logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  letter-spacing: 0.5px;
+}
+.nav-logo-text span { color: var(--soft-mint); font-weight: 700; }
+
+.nav-links { display: flex; gap: 36px; list-style: none; }
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-in-card);
+  font-weight: 500;
+  font-size: 0.92rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  position: relative;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: #fff; }
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 2px;
+  background: var(--coral);
+  transition: width 0.3s;
+}
+.nav-links a:hover::after { width: 100%; }
+
+.nav-cta {
+  background: var(--coral) !important;
+  color: var(--text-on-coral) !important;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 700;
+  text-transform: uppercase !important;
+  letter-spacing: 1px;
+  font-size: 0.85rem !important;
+  transition: all 0.3s !important;
+  box-shadow: 0 0 20px var(--coral-dim);
+}
+.nav-cta:hover { box-shadow: 0 0 30px var(--coral-glow) !important; transform: translateY(-1px); }
+.nav-cta::after { display: none !important; }
+
+.mobile-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
+.mobile-toggle span { width: 26px; height: 2px; background: var(--text-primary); transition: 0.3s; }
+
+/* ── HERO ── */
+.hero {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 120px 20px 80px;
+}
+.hero-content { max-width: 800px; }
+
+.hero-badge {
+  display: inline-block;
+  padding: 8px 20px;
+  border: 1px solid var(--coral);
+  border-radius: 50px;
+  font-size: 0.8rem;
+  color: var(--coral);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  background: var(--coral-dim);
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  line-height: 1.15;
+  margin-bottom: 10px;
+  animation: fadeInUp 0.8s ease-out 0.15s both;
+}
+.hero h1 .mint { color: var(--mint-green); }
+.hero h1 .coral { color: var(--coral); }
+
+.hero-tagline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-bottom: 24px;
+  animation: fadeInUp 0.8s ease-out 0.3s both;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto 40px;
+  animation: fadeInUp 0.8s ease-out 0.45s both;
+}
+
+.hero-buttons {
+  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+  animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+.btn-primary {
+  background: var(--coral);
+  color: var(--text-on-coral);
+  padding: 14px 36px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: all 0.3s;
+  box-shadow: 0 4px 25px var(--coral-dim);
+  border: none;
+  cursor: pointer;
+}
+.btn-primary:hover { box-shadow: 0 6px 35px var(--coral-glow); transform: translateY(-2px); }
+
+.btn-secondary {
+  background: var(--card-bg);
+  color: var(--header-in-card);
+  padding: 14px 36px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  border: 1.5px solid var(--card-border);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.btn-secondary:hover { background: rgba(30, 76, 85, 0.85); transform: translateY(-2px); border-color: var(--mint-green); color: #fff; }
+
+.hero-glow {
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(135, 209, 194, 0.07) 0%, transparent 70%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.hero-coral-glow {
+  position: absolute;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 107, 122, 0.06) 0%, transparent 70%);
+  top: 25%; right: 15%;
+  pointer-events: none;
+  animation: pulse 6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+/* ── SECTION COMMON ── */
+section { position: relative; z-index: 1; padding: 100px 20px; }
+.container { max-width: 1200px; margin: 0 auto; }
+
+.section-label {
+  display: inline-block;
+  color: var(--coral);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.section-title .mint { color: var(--mint-green); }
+.section-title .coral { color: var(--coral); }
+
+.section-subtitle {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  max-width: 650px;
+  margin-bottom: 60px;
+}
+
+/* ── PILLARS ── */
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+.pillar-card {
+  background: var(--card-bg-alpha);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: center;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+
+.pillar-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--mint-green), var(--coral));
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.pillar-card:hover::before { opacity: 1; }
+.pillar-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(135, 209, 194, 0.3);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  background: rgba(30, 76, 85, 0.7);
+}
+
+.pillar-icon {
+  width: 56px; height: 56px;
+  margin: 0 auto 16px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 14px;
+  background: rgba(135, 209, 194, 0.1);
+  border: 1px solid rgba(135, 209, 194, 0.2);
+}
+.pillar-icon svg { width: 28px; height: 28px; }
+
+.pillar-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: var(--header-in-card);
+}
+
+.pillar-card p {
+  font-size: 0.88rem;
+  color: var(--text-in-card);
+  line-height: 1.6;
+}
+
+/* ── MINDMAP ── */
+#mindmap { background: linear-gradient(180deg, transparent, rgba(11, 31, 39, 0.5), transparent); }
+
+.mindmap-container { width: 100%; overflow-x: auto; padding: 20px 0; -webkit-overflow-scrolling: touch; }
+.mindmap-svg-wrapper { min-width: 1000px; display: flex; justify-content: center; }
+
+.mindmap-instructions {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 20px;
+  font-style: italic;
+}
+
+/* ── FEATURES ── */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 32px;
+}
+
+.feature-card {
+  background: var(--card-bg-alpha);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 40px 32px;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+.feature-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--coral), var(--mint-green));
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.feature-card:hover::after { opacity: 1; }
+.feature-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(135, 209, 194, 0.3);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+  background: rgba(30, 76, 85, 0.7);
+}
+
+.feature-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 20px;
+}
+.feature-icon.mint-bg { background: rgba(135, 209, 194, 0.12); border: 1px solid rgba(135, 209, 194, 0.25); }
+.feature-icon.coral-bg { background: rgba(255, 107, 122, 0.12); border: 1px solid rgba(255, 107, 122, 0.25); }
+
+.feature-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  color: var(--header-in-card);
+}
+
+.feature-card p {
+  color: var(--text-in-card);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* ── GLOSSARY ── */
+#glossary { background: linear-gradient(180deg, transparent, rgba(11, 31, 39, 0.5), transparent); }
+
+.glossary-search { width: 100%; max-width: 500px; margin-bottom: 40px; position: relative; }
+
+.glossary-search input {
+  width: 100%;
+  padding: 14px 20px 14px 48px;
+  background: var(--card-bg);
+  border: 1.5px solid var(--card-border);
+  border-radius: 12px;
+  color: var(--text-in-card);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.glossary-search input::placeholder { color: var(--text-muted); }
+.glossary-search input:focus { border-color: var(--mint-green); }
+
+.glossary-search svg {
+  position: absolute;
+  left: 16px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+.glossary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.glossary-item {
+  background: var(--card-bg-alpha);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 24px;
+  transition: all 0.3s;
+  cursor: default;
+}
+.glossary-item:hover {
+  border-color: rgba(135, 209, 194, 0.3);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  background: rgba(30, 76, 85, 0.7);
+}
+
+.glossary-item-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+
+.glossary-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.glossary-dot.mint { background: var(--mint-green); box-shadow: 0 0 8px rgba(135, 209, 194, 0.4); }
+.glossary-dot.coral { background: var(--coral); box-shadow: 0 0 8px rgba(255, 107, 122, 0.4); }
+
+.glossary-item h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--header-in-card);
+}
+
+.glossary-item p {
+  font-size: 0.88rem;
+  color: var(--text-in-card);
+  line-height: 1.65;
+}
+
+.glossary-source {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.75rem;
+  color: var(--coral);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* ── CTA ── */
+.cta-section { text-align: center; padding: 120px 20px; }
+
+.cta-box {
+  background: linear-gradient(160deg, var(--card-bg), rgba(30, 76, 85, 0.7));
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  padding: 60px 40px;
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+.cta-box::before {
+  content: '';
+  position: absolute;
+  top: -50%; right: -30%;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 107, 122, 0.08) 0%, transparent 70%);
+}
+.cta-box h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  margin-bottom: 16px;
+  position: relative;
+  color: var(--header-in-card);
+}
+.cta-box p {
+  color: var(--text-in-card);
+  font-size: 1.05rem;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+/* ── FOOTER ── */
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--card-border);
+  padding: 40px 20px;
+  text-align: center;
+}
+footer p { color: var(--text-muted); font-size: 0.85rem; }
+footer a { color: var(--mint-green); text-decoration: none; }
+footer a:hover { color: var(--coral); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease-out, transform 0.7s ease-out; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .mobile-toggle { display: flex; }
+  .nav-links.open {
+    display: flex; flex-direction: column;
+    position: absolute;
+    top: 70px; left: 0; right: 0;
+    background: rgba(30, 76, 85, 0.97);
+    padding: 24px; gap: 20px;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .features-grid { grid-template-columns: 1fr; }
+  .glossary-grid { grid-template-columns: 1fr; }
+  .pillars-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+  section { padding: 70px 20px; }
+}
+
+/* ── MINDMAP NODES ── */
+.mm-node { cursor: pointer; transition: all 0.3s; }
+.mm-node:hover .mm-rect { filter: brightness(1.3); }
+.mm-node:hover .mm-label { fill: #fff; }
+
+/* ── CORAL TEXT ── */
+.coral { color: var(--coral); }
+</style>
+</head>
+<body>
+
+<!-- BOTANICAL BACKGROUND -->
+<div class="botanical-bg">
+  <svg class="branch-1" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 380 Q120 300 180 250 Q240 200 300 170 Q360 140 420 100 Q460 70 490 30" stroke="#87D1C2" stroke-width="1.5"/>
+    <ellipse cx="180" cy="250" rx="18" ry="32" transform="rotate(-30 180 250)" fill="#87D1C2" opacity="0.3"/>
+    <ellipse cx="160" cy="230" rx="16" ry="28" transform="rotate(-50 160 230)" fill="#87D1C2" opacity="0.25"/>
+    <ellipse cx="300" cy="170" rx="20" ry="35" transform="rotate(-20 300 170)" fill="#87D1C2" opacity="0.3"/>
+    <ellipse cx="280" cy="155" rx="16" ry="28" transform="rotate(-45 280 155)" fill="#87D1C2" opacity="0.2"/>
+    <ellipse cx="420" cy="100" rx="18" ry="30" transform="rotate(-15 420 100)" fill="#87D1C2" opacity="0.25"/>
+    <ellipse cx="400" cy="85" rx="14" ry="24" transform="rotate(-40 400 85)" fill="#87D1C2" opacity="0.2"/>
+    <circle cx="230" cy="220" r="6" fill="#FF6B7A" opacity="0.6"/>
+    <circle cx="350" cy="150" r="5" fill="#FF6B7A" opacity="0.55"/>
+    <circle cx="460" cy="65" r="7" fill="#FF6B7A" opacity="0.6"/>
+    <circle cx="130" cy="290" r="4" fill="#FF6B7A" opacity="0.5"/>
+    <circle cx="380" cy="125" r="5" fill="#87D1C2" opacity="0.4"/>
+    <circle cx="100" cy="310" r="5" fill="#FF6B7A" opacity="0.45"/>
+    <ellipse cx="240" cy="210" rx="12" ry="22" transform="rotate(-35 240 210)" fill="#87D1C2" opacity="0.15"/>
+    <ellipse cx="370" cy="135" rx="10" ry="18" transform="rotate(-25 370 135)" fill="#87D1C2" opacity="0.15"/>
+  </svg>
+  <svg class="branch-2" viewBox="0 0 450 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M30 350 Q100 280 160 230 Q220 180 290 150 Q350 120 420 80" stroke="#87D1C2" stroke-width="1.5"/>
+    <ellipse cx="160" cy="230" rx="20" ry="34" transform="rotate(25 160 230)" fill="#87D1C2" opacity="0.25"/>
+    <ellipse cx="290" cy="150" rx="18" ry="30" transform="rotate(35 290 150)" fill="#87D1C2" opacity="0.3"/>
+    <ellipse cx="140" cy="210" rx="14" ry="24" transform="rotate(50 140 210)" fill="#87D1C2" opacity="0.2"/>
+    <ellipse cx="350" cy="120" rx="16" ry="28" transform="rotate(20 350 120)" fill="#87D1C2" opacity="0.2"/>
+    <circle cx="200" cy="200" r="6" fill="#FF6B7A" opacity="0.6"/>
+    <circle cx="330" cy="135" r="5" fill="#FF6B7A" opacity="0.55"/>
+    <circle cx="100" cy="290" r="7" fill="#FF6B7A" opacity="0.6"/>
+    <circle cx="390" cy="95" r="4" fill="#FF6B7A" opacity="0.5"/>
+    <circle cx="250" cy="170" r="5" fill="#87D1C2" opacity="0.35"/>
+    <circle cx="70" cy="310" r="4" fill="#FF6B7A" opacity="0.45"/>
+  </svg>
+  <svg class="branch-3" viewBox="0 0 550 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M40 400 Q130 310 200 250 Q280 190 360 150 Q430 110 510 60" stroke="#87D1C2" stroke-width="1.5"/>
+    <ellipse cx="200" cy="250" rx="22" ry="36" transform="rotate(-35 200 250)" fill="#87D1C2" opacity="0.25"/>
+    <ellipse cx="360" cy="150" rx="20" ry="32" transform="rotate(-20 360 150)" fill="#87D1C2" opacity="0.3"/>
+    <ellipse cx="175" cy="230" rx="16" ry="26" transform="rotate(-55 175 230)" fill="#87D1C2" opacity="0.2"/>
+    <ellipse cx="440" cy="105" rx="14" ry="24" transform="rotate(-30 440 105)" fill="#87D1C2" opacity="0.2"/>
+    <circle cx="260" cy="210" r="7" fill="#FF6B7A" opacity="0.6"/>
+    <circle cx="400" cy="130" r="6" fill="#FF6B7A" opacity="0.55"/>
+    <circle cx="130" cy="320" r="5" fill="#FF6B7A" opacity="0.5"/>
+    <circle cx="480" cy="80" r="6" fill="#FF6B7A" opacity="0.6"/>
+    <circle cx="310" cy="180" r="4" fill="#87D1C2" opacity="0.35"/>
+    <circle cx="90" cy="360" r="5" fill="#FF6B7A" opacity="0.45"/>
+  </svg>
+  <svg class="branch-4" viewBox="0 0 480 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 340 Q80 270 150 220 Q230 170 310 130 Q380 100 450 60" stroke="#87D1C2" stroke-width="1.5"/>
+    <ellipse cx="150" cy="220" rx="18" ry="30" transform="rotate(30 150 220)" fill="#87D1C2" opacity="0.3"/>
+    <ellipse cx="310" cy="130" rx="20" ry="34" transform="rotate(20 310 130)" fill="#87D1C2" opacity="0.25"/>
+    <ellipse cx="130" cy="200" rx="14" ry="22" transform="rotate(50 130 200)" fill="#87D1C2" opacity="0.2"/>
+    <ellipse cx="380" cy="100" rx="16" ry="26" transform="rotate(15 380 100)" fill="#87D1C2" opacity="0.2"/>
+    <circle cx="200" cy="190" r="6" fill="#FF6B7A" opacity="0.6"/>
+    <circle cx="350" cy="115" r="7" fill="#FF6B7A" opacity="0.55"/>
+    <circle cx="80" cy="275" r="5" fill="#FF6B7A" opacity="0.5"/>
+    <circle cx="420" cy="75" r="5" fill="#FF6B7A" opacity="0.6"/>
+    <circle cx="250" cy="160" r="4" fill="#87D1C2" opacity="0.35"/>
+    <circle cx="55" cy="300" r="4" fill="#FF6B7A" opacity="0.45"/>
+  </svg>
+  <svg class="branch-5" viewBox="0 0 520 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M30 380 Q110 300 190 240 Q270 190 350 140 Q410 100 490 50" stroke="#87D1C2" stroke-width="1.2"/>
+    <ellipse cx="190" cy="240" rx="20" ry="33" transform="rotate(-40 190 240)" fill="#87D1C2" opacity="0.2"/>
+    <ellipse cx="350" cy="140" rx="18" ry="30" transform="rotate(-25 350 140)" fill="#87D1C2" opacity="0.25"/>
+    <ellipse cx="170" cy="220" rx="14" ry="24" transform="rotate(-60 170 220)" fill="#87D1C2" opacity="0.15"/>
+    <circle cx="240" cy="210" r="6" fill="#FF6B7A" opacity="0.6"/>
+    <circle cx="400" cy="115" r="5" fill="#FF6B7A" opacity="0.55"/>
+    <circle cx="120" cy="300" r="7" fill="#FF6B7A" opacity="0.6"/>
+    <circle cx="310" cy="160" r="4" fill="#87D1C2" opacity="0.3"/>
+    <circle cx="460" cy="70" r="5" fill="#FF6B7A" opacity="0.5"/>
+  </svg>
+  <svg class="branch-6" viewBox="0 0 500 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M40 360 Q100 280 180 220 Q260 170 340 130 Q400 95 470 50" stroke="#87D1C2" stroke-width="1.2"/>
+    <ellipse cx="180" cy="220" rx="18" ry="32" transform="rotate(25 180 220)" fill="#87D1C2" opacity="0.25"/>
+    <ellipse cx="340" cy="130" rx="16" ry="28" transform="rotate(30 340 130)" fill="#87D1C2" opacity="0.2"/>
+    <circle cx="230" cy="190" r="7" fill="#FF6B7A" opacity="0.6"/>
+    <circle cx="380" cy="110" r="5" fill="#FF6B7A" opacity="0.55"/>
+    <circle cx="100" cy="290" r="6" fill="#FF6B7A" opacity="0.6"/>
+    <circle cx="440" cy="70" r="4" fill="#FF6B7A" opacity="0.5"/>
+    <circle cx="150" cy="250" r="4" fill="#FF6B7A" opacity="0.45"/>
+  </svg>
+  <svg class="branch-7" viewBox="0 0 400 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 330 Q90 260 150 200 Q210 150 280 110 Q340 80 380 40" stroke="#87D1C2" stroke-width="1"/>
+    <ellipse cx="150" cy="200" rx="16" ry="28" transform="rotate(-30 150 200)" fill="#87D1C2" opacity="0.2"/>
+    <ellipse cx="280" cy="110" rx="14" ry="24" transform="rotate(-20 280 110)" fill="#87D1C2" opacity="0.15"/>
+    <circle cx="200" cy="170" r="5" fill="#FF6B7A" opacity="0.5"/>
+    <circle cx="320" cy="90" r="6" fill="#FF6B7A" opacity="0.55"/>
+    <circle cx="100" cy="250" r="4" fill="#FF6B7A" opacity="0.45"/>
+  </svg>
+  <svg class="branch-8" viewBox="0 0 380 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M30 300 Q80 240 140 190 Q200 140 270 100 Q330 70 360 30" stroke="#87D1C2" stroke-width="1"/>
+    <ellipse cx="140" cy="190" rx="14" ry="24" transform="rotate(35 140 190)" fill="#87D1C2" opacity="0.2"/>
+    <ellipse cx="270" cy="100" rx="12" ry="20" transform="rotate(25 270 100)" fill="#87D1C2" opacity="0.15"/>
+    <circle cx="180" cy="160" r="6" fill="#FF6B7A" opacity="0.55"/>
+    <circle cx="310" cy="80" r="5" fill="#FF6B7A" opacity="0.5"/>
+    <circle cx="80" cy="230" r="4" fill="#FF6B7A" opacity="0.45"/>
+  </svg>
+</div>
+
+<!-- FLOATING PARTICLES -->
+<div class="particles" id="particles"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <circle cx="18" cy="18" r="5" fill="#87D1C2"/>
+      <circle cx="18" cy="6" r="3" fill="none" stroke="#FF6B7A" stroke-width="1.5"/>
+      <circle cx="28" cy="12" r="2.5" fill="#87D1C2" opacity="0.6"/>
+      <circle cx="28" cy="25" r="3" fill="none" stroke="#FF6B7A" stroke-width="1.5"/>
+      <circle cx="18" cy="30" r="2.5" fill="#87D1C2" opacity="0.6"/>
+      <circle cx="8" cy="25" r="3" fill="none" stroke="#FF6B7A" stroke-width="1.5"/>
+      <circle cx="8" cy="12" r="2.5" fill="#87D1C2" opacity="0.6"/>
+      <line x1="18" y1="13" x2="18" y2="9" stroke="#87D1C2" stroke-width="1" stroke-dasharray="2 2"/>
+      <line x1="22" y1="15" x2="26" y2="12" stroke="#87D1C2" stroke-width="1" stroke-dasharray="2 2"/>
+      <line x1="22" y1="21" x2="26" y2="24" stroke="#87D1C2" stroke-width="1" stroke-dasharray="2 2"/>
+      <line x1="18" y1="23" x2="18" y2="28" stroke="#87D1C2" stroke-width="1" stroke-dasharray="2 2"/>
+      <line x1="14" y1="21" x2="10" y2="24" stroke="#87D1C2" stroke-width="1" stroke-dasharray="2 2"/>
+      <line x1="14" y1="15" x2="10" y2="12" stroke="#87D1C2" stroke-width="1" stroke-dasharray="2 2"/>
+    </svg>
+    <span class="nav-logo-text">Psych<span>Node</span></span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#pillars">Pillars</a></li>
+    <li><a href="#mindmap">Mind Map</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#glossary">Glossary</a></li>
+    <li><a href="https://youtube.com" target="_blank" class="nav-cta">YouTube</a></li>
+  </ul>
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-coral-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Psychology · Neuroscience · Transformation</div>
+    <h1>Map Your <span class="mint">Mind</span>.<br>Transform Your <span class="coral">Life</span>.</h1>
+    <p class="hero-tagline">Unlock Your Highest Potential</p>
+    <p>Explore the science behind identity, biology, and self-transformation — organized into an interconnected mind map that turns knowledge into lasting change.</p>
+    <div class="hero-buttons">
+      <a href="#mindmap" class="btn-primary">Explore the Mind Map</a>
+      <a href="#glossary" class="btn-secondary">Browse Glossary</a>
+    </div>
+  </div>
+</section>
+
+<!-- CORE PILLARS -->
+<section id="pillars">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">Core Pillars</span>
+      <h2 class="section-title">The Five <span class="mint">Pillars</span> of <span class="coral">PsychNode</span></h2>
+      <p class="section-subtitle">Every video, every concept, and every insight maps back to these five foundational areas of understanding.</p>
+    </div>
+    <div class="pillars-grid reveal">
+      <div class="pillar-card">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#87D1C2" stroke-width="1.8" stroke-linecap="round"><path d="M12 2a7 7 0 017 7c0 3-2 5.5-4 7.5L12 22l-3-5.5C7 14.5 5 12 5 9a7 7 0 017-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        </div>
+        <h3>Self Awareness</h3>
+        <p>Recognize the programs your biology and conditioning run beneath conscious thought.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#FF6B7A" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="4" r="1.5"/><circle cx="19" cy="8" r="1.5"/><circle cx="19" cy="16" r="1.5"/><circle cx="12" cy="20" r="1.5"/><circle cx="5" cy="16" r="1.5"/><circle cx="5" cy="8" r="1.5"/><line x1="12" y1="9" x2="12" y2="5.5"/><line x1="14.6" y1="10.5" x2="17.6" y2="9"/><line x1="14.6" y1="13.5" x2="17.6" y2="15"/><line x1="12" y1="15" x2="12" y2="18.5"/><line x1="9.4" y1="13.5" x2="6.4" y2="15"/><line x1="9.4" y1="10.5" x2="6.4" y2="9"/></svg>
+        </div>
+        <h3>Mind Mapping</h3>
+        <p>Connect concepts across disciplines to see the bigger architecture of personal transformation.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#87D1C2" stroke-width="1.8" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><line x1="9" y1="7" x2="16" y2="7"/><line x1="9" y1="11" x2="14" y2="11"/></svg>
+        </div>
+        <h3>Knowledge</h3>
+        <p>Peer-reviewed science from neuroscience, psychology, and behavioral research — no pseudoscience.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#87D1C2" stroke-width="1.8" stroke-linecap="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+        </div>
+        <h3>Growth</h3>
+        <p>Actionable systems, atomic habits, and environment design that compound over time.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#FF6B7A" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        </div>
+        <h3>Purpose</h3>
+        <p>Align biology, beliefs, and behavior toward a life of intentional, self-authored meaning.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MINDMAP -->
+<section id="mindmap">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">Interactive Mind Map</span>
+      <h2 class="section-title">The <span class="mint">Architecture</span> of Self-<span class="coral">Transformation</span></h2>
+      <p class="section-subtitle">Every concept from the script, mapped to show how biology, identity, self-assessment, and habits interconnect to shape your potential.</p>
+    </div>
+    <div class="mindmap-container reveal">
+      <div class="mindmap-svg-wrapper">
+        <svg id="mindmapSvg" viewBox="0 0 1100 750" width="1100" height="750" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="glowCoral">
+              <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+              <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <linearGradient id="connMint" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#87D1C2" stop-opacity="0.6"/>
+              <stop offset="100%" stop-color="#87D1C2" stop-opacity="0.15"/>
+            </linearGradient>
+            <linearGradient id="connCoral" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#FF6B7A" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#FF6B7A" stop-opacity="0.12"/>
+            </linearGradient>
+          </defs>
+
+          <!-- CONNECTIONS from center -->
+          <path d="M550 375 C420 375 380 170 280 170" stroke="url(#connMint)" stroke-width="2" fill="none" stroke-dasharray="6 4" opacity="0.7"/>
+          <path d="M550 375 C420 375 350 375 240 375" stroke="url(#connCoral)" stroke-width="2" fill="none" stroke-dasharray="6 4" opacity="0.7"/>
+          <path d="M550 375 C420 500 350 580 280 580" stroke="url(#connMint)" stroke-width="2" fill="none" stroke-dasharray="6 4" opacity="0.7"/>
+          <path d="M550 375 C680 375 750 170 830 170" stroke="url(#connCoral)" stroke-width="2" fill="none" stroke-dasharray="6 4" opacity="0.7"/>
+          <path d="M550 375 C680 500 750 580 830 580" stroke="url(#connMint)" stroke-width="2" fill="none" stroke-dasharray="6 4" opacity="0.7"/>
+
+          <!-- SUB-CONNECTIONS: Biology -->
+          <path d="M195 170 C130 170 100 95 70 95" stroke="#87D1C2" stroke-width="1.2" fill="none" opacity="0.4"/>
+          <path d="M195 170 C130 170 100 170 45 170" stroke="#87D1C2" stroke-width="1.2" fill="none" opacity="0.4"/>
+          <path d="M195 170 C130 170 100 245 70 245" stroke="#FF6B7A" stroke-width="1.2" fill="none" opacity="0.35"/>
+          <!-- SUB-CONNECTIONS: Identity -->
+          <path d="M155 375 C100 375 80 310 45 310" stroke="#FF6B7A" stroke-width="1.2" fill="none" opacity="0.35"/>
+          <path d="M155 375 C100 375 80 375 35 375" stroke="#87D1C2" stroke-width="1.2" fill="none" opacity="0.4"/>
+          <path d="M155 375 C100 375 80 440 45 440" stroke="#87D1C2" stroke-width="1.2" fill="none" opacity="0.4"/>
+          <!-- SUB-CONNECTIONS: Self-Assessment -->
+          <path d="M195 580 C130 580 100 520 55 520" stroke="#FF6B7A" stroke-width="1.2" fill="none" opacity="0.35"/>
+          <path d="M195 580 C130 580 100 580 45 580" stroke="#87D1C2" stroke-width="1.2" fill="none" opacity="0.4"/>
+          <path d="M195 580 C130 580 100 650 55 650" stroke="#FF6B7A" stroke-width="1.2" fill="none" opacity="0.35"/>
+          <!-- SUB-CONNECTIONS: Habits -->
+          <path d="M915 170 C980 170 1000 95 1040 95" stroke="#87D1C2" stroke-width="1.2" fill="none" opacity="0.4"/>
+          <path d="M915 170 C980 170 1010 170 1055 170" stroke="#FF6B7A" stroke-width="1.2" fill="none" opacity="0.35"/>
+          <path d="M915 170 C980 170 1000 245 1040 245" stroke="#87D1C2" stroke-width="1.2" fill="none" opacity="0.4"/>
+          <!-- SUB-CONNECTIONS: Transformation -->
+          <path d="M915 580 C980 580 1000 520 1040 520" stroke="#87D1C2" stroke-width="1.2" fill="none" opacity="0.4"/>
+          <path d="M915 580 C980 580 1010 580 1055 580" stroke="#FF6B7A" stroke-width="1.2" fill="none" opacity="0.35"/>
+          <path d="M915 580 C980 580 1000 650 1040 650" stroke="#87D1C2" stroke-width="1.2" fill="none" opacity="0.4"/>
+
+          <!-- Cross-connections -->
+          <path d="M280 210 Q300 290 240 335" stroke="#FF6B7A" stroke-width="0.8" fill="none" stroke-dasharray="3 5" opacity="0.25"/>
+          <path d="M240 415 Q300 480 280 540" stroke="#87D1C2" stroke-width="0.8" fill="none" stroke-dasharray="3 5" opacity="0.2"/>
+          <path d="M830 210 Q810 290 830 340" stroke="#FF6B7A" stroke-width="0.8" fill="none" stroke-dasharray="3 5" opacity="0.2"/>
+
+          <!-- ═══ CENTER NODE ═══ -->
+          <g class="mm-node" filter="url(#glowCoral)">
+            <rect class="mm-rect" x="480" y="345" width="140" height="60" rx="30" fill="#FF6B7A" opacity="0.9"/>
+            <text class="mm-label" x="550" y="381" text-anchor="middle" fill="#0b1f27" font-family="Playfair Display,serif" font-size="15" font-weight="700">YOUR POTENTIAL</text>
+          </g>
+
+          <!-- ═══ BIOLOGY NODE ═══ -->
+          <g class="mm-node" filter="url(#glow)">
+            <rect class="mm-rect" x="195" y="148" width="170" height="44" rx="22" fill="#1e4c55" stroke="#87D1C2" stroke-width="1.5"/>
+            <text class="mm-label" x="280" y="176" text-anchor="middle" fill="#BCE9DC" font-family="Outfit,sans-serif" font-size="13" font-weight="600">🧬 YOUR BIOLOGY</text>
+          </g>
+          <!-- Biology sub-nodes (mint border = #1e4c55 fill, coral border = #0b1f27 fill) -->
+          <g class="mm-node"><rect x="2" y="78" width="135" height="34" rx="17" fill="#1e4c55" stroke="#87D1C2" stroke-width="1"/><text x="69" y="100" text-anchor="middle" fill="#E6F6F2" font-family="Outfit" font-size="10.5" font-weight="500">Sympathetic NS</text></g>
+          <g class="mm-node"><rect x="2" y="153" width="145" height="34" rx="17" fill="#1e4c55" stroke="#87D1C2" stroke-width="1"/><text x="74" y="175" text-anchor="middle" fill="#E6F6F2" font-family="Outfit" font-size="10.5" font-weight="500">Parasympathetic NS</text></g>
+          <g class="mm-node"><rect x="2" y="228" width="145" height="34" rx="17" fill="#0b1f27" stroke="#FF6B7A" stroke-width="1"/><text x="74" y="250" text-anchor="middle" fill="#FF6B7A" font-family="Outfit" font-size="10.5" font-weight="500">Psychosomatic Effect</text></g>
+
+          <!-- ═══ IDENTITY NODE ═══ -->
+          <g class="mm-node" filter="url(#glow)">
+            <rect class="mm-rect" x="155" y="353" width="170" height="44" rx="22" fill="#0b1f27" stroke="#FF6B7A" stroke-width="1.5"/>
+            <text class="mm-label" x="240" y="381" text-anchor="middle" fill="#FF6B7A" font-family="Outfit,sans-serif" font-size="13" font-weight="600">🎭 YOUR IDENTITY</text>
+          </g>
+          <!-- Identity sub-nodes -->
+          <g class="mm-node"><rect x="2" y="293" width="125" height="34" rx="17" fill="#0b1f27" stroke="#FF6B7A" stroke-width="1"/><text x="64" y="315" text-anchor="middle" fill="#FF6B7A" font-family="Outfit" font-size="10.5" font-weight="500">The Simulation</text></g>
+          <g class="mm-node"><rect x="2" y="358" width="115" height="34" rx="17" fill="#1e4c55" stroke="#87D1C2" stroke-width="1"/><text x="59" y="380" text-anchor="middle" fill="#E6F6F2" font-family="Outfit" font-size="10.5" font-weight="500">Neuroplasticity</text></g>
+          <g class="mm-node"><rect x="2" y="423" width="155" height="34" rx="17" fill="#1e4c55" stroke="#87D1C2" stroke-width="1"/><text x="79" y="445" text-anchor="middle" fill="#E6F6F2" font-family="Outfit" font-size="10.5" font-weight="500">Body = Unconscious Mind</text></g>
+
+          <!-- ═══ SELF-ASSESSMENT NODE ═══ -->
+          <g class="mm-node" filter="url(#glow)">
+            <rect class="mm-rect" x="185" y="558" width="185" height="44" rx="22" fill="#1e4c55" stroke="#87D1C2" stroke-width="1.5"/>
+            <text class="mm-label" x="278" y="586" text-anchor="middle" fill="#BCE9DC" font-family="Outfit,sans-serif" font-size="13" font-weight="600">🔍 SELF-ASSESSMENT</text>
+          </g>
+          <!-- Self-Assessment sub-nodes -->
+          <g class="mm-node"><rect x="2" y="503" width="145" height="34" rx="17" fill="#0b1f27" stroke="#FF6B7A" stroke-width="1"/><text x="74" y="525" text-anchor="middle" fill="#FF6B7A" font-family="Outfit" font-size="10.5" font-weight="500">Impostor Syndrome</text></g>
+          <g class="mm-node"><rect x="2" y="563" width="145" height="34" rx="17" fill="#1e4c55" stroke="#87D1C2" stroke-width="1"/><text x="74" y="585" text-anchor="middle" fill="#E6F6F2" font-family="Outfit" font-size="10.5" font-weight="500">Dunning-Kruger Effect</text></g>
+          <g class="mm-node"><rect x="2" y="633" width="140" height="34" rx="17" fill="#0b1f27" stroke="#FF6B7A" stroke-width="1"/><text x="72" y="655" text-anchor="middle" fill="#FF6B7A" font-family="Outfit" font-size="10.5" font-weight="500">Competency Audit</text></g>
+
+          <!-- ═══ HABITS NODE ═══ -->
+          <g class="mm-node" filter="url(#glow)">
+            <rect class="mm-rect" x="745" y="148" width="170" height="44" rx="22" fill="#0b1f27" stroke="#FF6B7A" stroke-width="1.5"/>
+            <text class="mm-label" x="830" y="176" text-anchor="middle" fill="#FF6B7A" font-family="Outfit,sans-serif" font-size="13" font-weight="600">⚙️ YOUR HABITS</text>
+          </g>
+          <!-- Habits sub-nodes -->
+          <g class="mm-node"><rect x="970" y="78" width="128" height="34" rx="17" fill="#1e4c55" stroke="#87D1C2" stroke-width="1"/><text x="1034" y="100" text-anchor="middle" fill="#E6F6F2" font-family="Outfit" font-size="10.5" font-weight="500">Identity-Based Habits</text></g>
+          <g class="mm-node"><rect x="970" y="153" width="128" height="34" rx="17" fill="#0b1f27" stroke="#FF6B7A" stroke-width="1"/><text x="1034" y="175" text-anchor="middle" fill="#FF6B7A" font-family="Outfit" font-size="10.5" font-weight="500">Habit Stacking</text></g>
+          <g class="mm-node"><rect x="970" y="228" width="128" height="34" rx="17" fill="#1e4c55" stroke="#87D1C2" stroke-width="1"/><text x="1034" y="250" text-anchor="middle" fill="#E6F6F2" font-family="Outfit" font-size="10.5" font-weight="500">Environment Design</text></g>
+
+          <!-- ═══ TRANSFORMATION NODE ═══ -->
+          <g class="mm-node" filter="url(#glow)">
+            <rect class="mm-rect" x="730" y="558" width="185" height="44" rx="22" fill="#1e4c55" stroke="#87D1C2" stroke-width="1.5"/>
+            <text class="mm-label" x="823" y="586" text-anchor="middle" fill="#BCE9DC" font-family="Outfit,sans-serif" font-size="13" font-weight="600">✨ TRANSFORMATION</text>
+          </g>
+          <!-- Transformation sub-nodes -->
+          <g class="mm-node"><rect x="968" y="503" width="130" height="34" rx="17" fill="#1e4c55" stroke="#87D1C2" stroke-width="1"/><text x="1033" y="525" text-anchor="middle" fill="#E6F6F2" font-family="Outfit" font-size="10.5" font-weight="500">Retrain Nervous Sys</text></g>
+          <g class="mm-node"><rect x="968" y="563" width="130" height="34" rx="17" fill="#0b1f27" stroke="#FF6B7A" stroke-width="1"/><text x="1033" y="585" text-anchor="middle" fill="#FF6B7A" font-family="Outfit" font-size="10.5" font-weight="500">Rewrite Your Story</text></g>
+          <g class="mm-node"><rect x="968" y="633" width="130" height="34" rx="17" fill="#1e4c55" stroke="#87D1C2" stroke-width="1"/><text x="1033" y="655" text-anchor="middle" fill="#E6F6F2" font-family="Outfit" font-size="10.5" font-weight="500">Design Your Systems</text></g>
+
+          <!-- Decorative dots -->
+          <circle cx="450" cy="315" r="3" fill="#FF6B7A" opacity="0.5"/>
+          <circle cx="650" cy="315" r="3" fill="#87D1C2" opacity="0.4"/>
+          <circle cx="450" cy="435" r="3" fill="#87D1C2" opacity="0.35"/>
+          <circle cx="650" cy="435" r="3" fill="#FF6B7A" opacity="0.5"/>
+          <circle cx="550" cy="290" r="2" fill="#FF6B7A" opacity="0.4"/>
+          <circle cx="550" cy="460" r="2" fill="#FF6B7A" opacity="0.4"/>
+        </svg>
+      </div>
+    </div>
+    <p class="mindmap-instructions">Scroll horizontally on mobile to explore the full mind map</p>
+  </div>
+</section>
+
+<!-- CORE FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">Core Features</span>
+      <h2 class="section-title">How <span class="mint">PsychNode</span> Works</h2>
+      <p class="section-subtitle">We distill complex science into interconnected knowledge nodes you can explore, understand, and apply.</p>
+    </div>
+    <div class="features-grid reveal">
+      <div class="feature-card">
+        <div class="feature-icon coral-bg">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF6B7A" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><circle cx="4" cy="6" r="2"/><circle cx="20" cy="6" r="2"/><circle cx="4" cy="18" r="2"/><circle cx="20" cy="18" r="2"/><line x1="9.5" y1="10.5" x2="5.5" y2="7.5"/><line x1="14.5" y1="10.5" x2="18.5" y2="7.5"/><line x1="9.5" y1="13.5" x2="5.5" y2="16.5"/><line x1="14.5" y1="13.5" x2="18.5" y2="16.5"/></svg>
+        </div>
+        <h3>Connected Mind Map</h3>
+        <p>Every concept from our videos is placed into an expanding mind map, showing how biology links to identity, identity shapes self-assessment, and habits drive transformation. No knowledge exists in isolation.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon mint-bg">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#87D1C2" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><path d="M8 7h8M8 11h6M8 15h4"/></svg>
+        </div>
+        <h3>Living Glossary</h3>
+        <p>A searchable reference of every psychological and neuroscientific concept we cover — from the Dunning-Kruger Effect to the Psychosomatic Response — with source attribution and plain-language definitions.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon coral-bg">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF6B7A" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <h3>Science-First Approach</h3>
+        <p>Every claim is traced to peer-reviewed research or respected published work — Sapolsky's neuroscience, Dispenza's mind-body science, Clear's behavioral framework, and more. No pseudoscience, ever.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GLOSSARY -->
+<section id="glossary">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">Concept Glossary</span>
+      <h2 class="section-title">Key <span class="mint">Concepts</span> Explored</h2>
+      <p class="section-subtitle">Every term defined below comes directly from the script. Search and explore.</p>
+    </div>
+    <div class="glossary-search reveal">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="glossarySearch" placeholder="Search concepts...">
+    </div>
+    <div class="glossary-grid reveal" id="glossaryGrid">
+
+      <div class="glossary-item" data-term="sympathetic nervous system survival mode">
+        <div class="glossary-item-header"><div class="glossary-dot mint"></div><h4>Sympathetic Nervous System</h4></div>
+        <p>Your body's survival mode — it floods you with cortisol, raises heart rate, and narrows focus to deal with immediate threats. Essential for survival, but destructive when chronically active.</p>
+        <span class="glossary-source">Joe Dispenza — Breaking the Habit of Being Yourself</span>
+      </div>
+
+      <div class="glossary-item" data-term="parasympathetic nervous system growth mode">
+        <div class="glossary-item-header"><div class="glossary-dot mint"></div><h4>Parasympathetic Nervous System</h4></div>
+        <p>Your growth mode — calms the body, restores immune function, opens creative thinking, and enables future planning instead of reactive survival.</p>
+        <span class="glossary-source">Joe Dispenza — Breaking the Habit of Being Yourself</span>
+      </div>
+
+      <div class="glossary-item" data-term="chronic sympathetic dominance stress">
+        <div class="glossary-item-header"><div class="glossary-dot coral"></div><h4>Chronic Sympathetic Dominance</h4></div>
+        <p>When modern pressures keep the stress alarm ringing nonstop, the body never receives the signal that danger has passed — locking you in survival mode indefinitely.</p>
+        <span class="glossary-source">Joe Dispenza — Breaking the Habit of Being Yourself</span>
+      </div>
+
+      <div class="glossary-item" data-term="psychosomatic effect body mind">
+        <div class="glossary-item-header"><div class="glossary-dot coral"></div><h4>Psychosomatic Effect</h4></div>
+        <p>When chronic mental stress manifests as physical symptoms: persistent headaches, digestive problems, and insomnia. The body is responding accurately to a mind that believes it is always in danger.</p>
+        <span class="glossary-source">Joe Dispenza — Breaking the Habit of Being Yourself</span>
+      </div>
+
+      <div class="glossary-item" data-term="amygdala threat detection fear brain">
+        <div class="glossary-item-header"><div class="glossary-dot mint"></div><h4>Amygdala</h4></div>
+        <p>The brain's threat detection center. Under chronic stress, it grows larger and more reactive, making you biologically primed for fear over rational decision-making.</p>
+        <span class="glossary-source">Robert Sapolsky — Behave</span>
+      </div>
+
+      <div class="glossary-item" data-term="prefrontal cortex planning decision brain">
+        <div class="glossary-item-header"><div class="glossary-dot mint"></div><h4>Prefrontal Cortex</h4></div>
+        <p>The brain region responsible for planning, decision-making, and building the life you want. Chronic stress physically shrinks this area, reducing your capacity for growth.</p>
+        <span class="glossary-source">Robert Sapolsky — Behave</span>
+      </div>
+
+      <div class="glossary-item" data-term="simulation identity constructed self chopra">
+        <div class="glossary-item-header"><div class="glossary-dot coral"></div><h4>The Simulation</h4></div>
+        <p>Deepak Chopra's term for the layer of labels, fears, traumas, and conditioning that sits over who you really are. You mistake this constructed identity for reality — but a story can be rewritten.</p>
+        <span class="glossary-source">Deepak Chopra — Metahuman</span>
+      </div>
+
+      <div class="glossary-item" data-term="neuroplasticity brain rewire change">
+        <div class="glossary-item-header"><div class="glossary-dot mint"></div><h4>Neuroplasticity</h4></div>
+        <p>The brain's ability to rewire itself based on what you believe and practice. Your identity is not fixed — it is a living, changeable architecture that responds to repeated thought and action.</p>
+        <span class="glossary-source">Deepak Chopra — Metahuman</span>
+      </div>
+
+      <div class="glossary-item" data-term="body unconscious mind dispenza">
+        <div class="glossary-item-header"><div class="glossary-dot coral"></div><h4>Body as Unconscious Mind</h4></div>
+        <p>Dispenza's insight that the body stores and reinforces the mind's beliefs at a chemical level. When your story says "I am under threat," your nervous system agrees and your brain physically reshapes itself.</p>
+        <span class="glossary-source">Joe Dispenza — Breaking the Habit of Being Yourself</span>
+      </div>
+
+      <div class="glossary-item" data-term="impostor syndrome fraud clance imes">
+        <div class="glossary-item-header"><div class="glossary-dot coral"></div><h4>Impostor Syndrome</h4></div>
+        <p>The persistent feeling that your accomplishments are undeserved, that someone will "find you out." Up to 70% of people experience it — dismissing real evidence of competence as luck or timing.</p>
+        <span class="glossary-source">Pauline Clance & Suzanne Imes (1978)</span>
+      </div>
+
+      <div class="glossary-item" data-term="dunning kruger effect overestimate competence">
+        <div class="glossary-item-header"><div class="glossary-dot mint"></div><h4>Dunning-Kruger Effect</h4></div>
+        <p>A cognitive bias where people with limited knowledge dramatically overestimate their competence, while genuinely skilled people underestimate themselves — because the more they learn, the more they see how much more there is.</p>
+        <span class="glossary-source">David Dunning & Justin Kruger (1999)</span>
+      </div>
+
+      <div class="glossary-item" data-term="competency audit evidence confidence">
+        <div class="glossary-item-header"><div class="glossary-dot coral"></div><h4>Competency Audit</h4></div>
+        <p>A deliberate inventory of what you have actually completed, what measurable results you have produced, and what trusted people have told you — grounding confidence in evidence rather than feelings.</p>
+        <span class="glossary-source">Synthesized from script framework</span>
+      </div>
+
+      <div class="glossary-item" data-term="identity based habits clear atomic">
+        <div class="glossary-item-header"><div class="glossary-dot mint"></div><h4>Identity-Based Habits</h4></div>
+        <p>James Clear's principle that every action is a vote for the type of person you want to become. You don't rise to the level of goals — you fall to the level of your systems.</p>
+        <span class="glossary-source">James Clear — Atomic Habits</span>
+      </div>
+
+      <div class="glossary-item" data-term="habit stacking trigger behavior chain">
+        <div class="glossary-item-header"><div class="glossary-dot mint"></div><h4>Habit Stacking</h4></div>
+        <p>Attaching new behaviors to existing routines: "After I pour my coffee, I write for ten minutes." The existing habit becomes a trigger; the new behavior rides on top of it until the chain runs automatically.</p>
+        <span class="glossary-source">James Clear — Atomic Habits</span>
+      </div>
+
+      <div class="glossary-item" data-term="environment design architecture willpower">
+        <div class="glossary-item-header"><div class="glossary-dot coral"></div><h4>Environment Design</h4></div>
+        <p>Making constructive behavior easy and destructive behavior hard — because willpower runs out, but an intentionally designed environment works even on your worst day. That is not motivation. That is architecture.</p>
+        <span class="glossary-source">James Clear — Atomic Habits</span>
+      </div>
+
+      <div class="glossary-item" data-term="social influence close many powerful groups">
+        <div class="glossary-item-header"><div class="glossary-dot mint"></div><h4>Social Influence on Habits</h4></div>
+        <p>We absorb the habits of three groups: the close, the many, and the powerful. Social rejection activates the same brain regions as physical pain, making your social environment a biological force on behavior.</p>
+        <span class="glossary-source">James Clear & Robert Sapolsky</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box reveal">
+      <h2>What would you do if you <span class="coral">genuinely believed</span> in yourself?</h2>
+      <p>Start mapping your mind. One concept at a time.</p>
+      <a href="https://youtube.com" target="_blank" class="btn-primary">Watch on YouTube</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--text-secondary); margin-bottom:12px;">Psych<span style="color:var(--mint-green);font-weight:700">Node</span></p>
+    <p>Map Your <span style="color:var(--coral)">Mind</span>. Transform Your <span style="color:var(--mint-green)">Life</span>.</p>
+    <p style="margin-top:20px;">&copy; 2026 PsychNode. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+// Particles
+const particleContainer = document.getElementById('particles');
+for (let i = 0; i < 30; i++) {
+  const p = document.createElement('div');
+  const isCoral = Math.random() < 0.4;
+  p.className = `particle ${isCoral ? 'coral' : 'mint'}`;
+  const size = Math.random() * 4 + 2;
+  p.style.width = size + 'px';
+  p.style.height = size + 'px';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.animationDuration = (Math.random() * 20 + 15) + 's';
+  p.style.animationDelay = (Math.random() * 20) + 's';
+  p.style.opacity = Math.random() * 0.4 + 0.1;
+  particleContainer.appendChild(p);
+}
+
+// Nav scroll
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50));
+
+// Mobile menu
+document.getElementById('mobileToggle').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+
+// Reveal on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Glossary search
+document.getElementById('glossarySearch').addEventListener('input', (e) => {
+  const q = e.target.value.toLowerCase();
+  document.querySelectorAll('.glossary-item').forEach(item => {
+    const text = item.dataset.term + ' ' + item.querySelector('h4').textContent + ' ' + item.querySelector('p').textContent;
+    item.style.display = text.toLowerCase().includes(q) ? '' : 'none';
+  });
+});
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', (e) => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { t.scrollIntoView({ behavior: 'smooth', block: 'start' }); document.getElementById('navLinks').classList.remove('open'); }
+  });
+});
+</script>
+</body>
+</html>
